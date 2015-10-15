@@ -2,6 +2,7 @@
 aws-main-run
 data
 .vagrant
+installators
 
 # ===== Java =====
 *.class
