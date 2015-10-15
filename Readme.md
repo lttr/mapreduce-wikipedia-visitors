@@ -1,4 +1,4 @@
-# Statistika návštěvnosti Wikipedie
+# Wikipedia visitors statistics using Hadoop
 
-Tento projekt obsahuje zdrojové kódy příkladu výpočtu návštěvnosti stránek česky 
-psané Wikipedie pomocí Apache Hadoop frameworku.
+This project contains Hadoop MapReduce job and accompanying scripts for 
+aggregating statistics about Wikipedia visitors.
