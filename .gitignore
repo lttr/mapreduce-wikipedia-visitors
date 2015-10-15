@@ -1,3 +1,8 @@
+# ===== This project =====
+aws-main-run
+data
+.vagrant
+
 # ===== Java =====
 *.class
 
