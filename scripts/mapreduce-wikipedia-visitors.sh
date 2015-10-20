@@ -1,5 +1,7 @@
+# Takes input files (Wikipedia pagecounts) as arguments and process them
+
 # ungzip all input files to stdout
-gunzip -c ../data/${1}-data/pagecounts*.gz |
+gunzip -c $* |
 # sum all lines starting with "cs" and not too long
 # finally print the associative array
 awk '
