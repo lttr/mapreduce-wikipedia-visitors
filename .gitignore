@@ -1,6 +1,7 @@
 # ===== This project =====
 aws-main-run
 data
+output
 .vagrant
 installators
 
