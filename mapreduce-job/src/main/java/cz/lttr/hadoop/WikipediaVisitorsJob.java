@@ -1,6 +1,9 @@
 package cz.lttr.hadoop;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -13,17 +16,25 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 /**
  * Job consists of two MapReduce sub-jobs. It picks up data from input directory
  * (the first argument). The first job sums the page views grouped by page name
- * and date and saves the output to intermediate directory (the second
- * argument). The second job sums the total page views for every page and saves
- * the output to final directory (the third argument).
+ * and date and saves the output to intermediate directory. The second job sums
+ * the total page views for every page and saves the output to final directory.
  */
 public class WikipediaVisitorsJob {
 
 	public static void main(String[] args) {
 
 		Path inputPath = new Path(args[0]);
-		Path sumByDayPath = new Path(args[1]);
-		Path totalSumPath = new Path(args[2]);
+		String outputBasePath = args[1];
+
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+		Date now = new Date();
+
+		String currentOutputFolderName = dateFormat.format(now);
+		String sumFolderName = "sum";
+		String totalFolderName = "total";
+
+		Path sumByDayPath = new Path(outputBasePath + "/" + currentOutputFolderName + "/" + sumFolderName);
+		Path totalSumPath = new Path(outputBasePath + "/" + currentOutputFolderName + "/" + totalFolderName);
 
 		try {
 			sumVisitorsByDay(inputPath, sumByDayPath);

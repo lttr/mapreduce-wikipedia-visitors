@@ -13,18 +13,12 @@ mvn clean install
 Put data into HDFS and run the job
 ```
 bin/hadoop -put <local data folder> <hdfs data folder>
-bin/hadoop jar /root/share/wikipedia-visitors.jar input/data outputSumX outputTotalX
+bin/hadoop jar  bin/hadoop jar /vagrant/mapreduce-job/target/wikipedia-visitors-1.0-SNAPSHOT.jar /input/micro-data /output
 ```
-
-
-With 3 pagecounts files:
-- 1. job completed in 1m 45s
-- 2. job completed in 31s
 
 Get data to local
 ```
-bin/hadoop fs -get outputSum6/* /root/share/data/sum
-bin/hadoop fs -get outputTotal6/* /root/share/data/total
+bin/hadoop fs -get /output/* /vagrant/output/mapreduce-job/
 ```
 
 Obtain top N most visited pages
