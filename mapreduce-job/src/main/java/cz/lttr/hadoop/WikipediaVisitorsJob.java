@@ -60,8 +60,11 @@ public class WikipediaVisitorsJob {
 		Configuration conf = new Configuration();
 		Job job = Job.getInstance(conf, "sumVisitorsByDay");
 
+		job.setNumReduceTasks(31);
+
 		job.setJarByClass(WikipediaVisitorsJob.class);
 		job.setMapperClass(VisitorsMapper.class);
+		job.setPartitionerClass(VisitorsPartitioner.class);
 		job.setCombinerClass(VisitorsReducer.class);
 		job.setReducerClass(VisitorsReducer.class);
 
