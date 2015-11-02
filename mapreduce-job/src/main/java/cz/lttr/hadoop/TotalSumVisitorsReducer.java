@@ -9,7 +9,7 @@ import org.apache.hadoop.mapreduce.Reducer;
 /**
  * Creates a total sum from input values. Key is left unchanged.
  */
-public class SumVisitorsReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
+public class TotalSumVisitorsReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
 
 	private IntWritable result = new IntWritable();
 

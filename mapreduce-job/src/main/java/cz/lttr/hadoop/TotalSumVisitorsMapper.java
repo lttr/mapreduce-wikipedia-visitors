@@ -10,7 +10,7 @@ import org.apache.hadoop.mapreduce.Mapper;
  * This is basically an identity mapper, it only selects the first record as key
  * and the third as value.
  */
-public class SumVisitorsMapper extends Mapper<Object, Text, Text, IntWritable> {
+public class TotalSumVisitorsMapper extends Mapper<Object, Text, Text, IntWritable> {
 
 	@Override
 	public void map(Object key, Text value, Context context) throws IOException, InterruptedException {

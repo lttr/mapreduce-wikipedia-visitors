@@ -29,12 +29,12 @@ public class WikipediaVisitorsJob {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 		Date now = new Date();
 
-		String currentOutputFolderName = dateFormat.format(now);
-		String sumFolderName = "sum";
-		String totalFolderName = "total";
+		String currentOutputFolder = dateFormat.format(now);
+		String sumByDayFolder = "sum";
+		String totalSumFolder = "total";
 
-		Path sumByDayPath = new Path(outputBasePath + "/" + currentOutputFolderName + "/" + sumFolderName);
-		Path totalSumPath = new Path(outputBasePath + "/" + currentOutputFolderName + "/" + totalFolderName);
+		Path sumByDayPath = new Path(outputBasePath + "/" + currentOutputFolder + "/" + sumByDayFolder);
+		Path totalSumPath = new Path(outputBasePath + "/" + currentOutputFolder + "/" + totalSumFolder);
 
 		try {
 			sumVisitorsByDay(inputPath, sumByDayPath);
@@ -45,7 +45,7 @@ public class WikipediaVisitorsJob {
 		}
 
 		try {
-			sumTotalVisitors(sumByDayPath, totalSumPath);
+			totalSumVisitors(sumByDayPath, totalSumPath);
 		} catch (Exception e) {
 			System.err.println("Exception running job sumTotalVisitors: " + e.getMessage());
 			e.printStackTrace();
@@ -77,16 +77,16 @@ public class WikipediaVisitorsJob {
 		job.waitForCompletion(true);
 	}
 
-	private static void sumTotalVisitors(Path inputPath, Path outputPath)
+	private static void totalSumVisitors(Path inputPath, Path outputPath)
 			throws IOException, ClassNotFoundException, InterruptedException {
 
 		Configuration conf = new Configuration();
-		Job job = Job.getInstance(conf, "sumTotalVisitors");
+		Job job = Job.getInstance(conf, "totalSumVisitors");
 
 		job.setJarByClass(WikipediaVisitorsJob.class);
-		job.setMapperClass(SumVisitorsMapper.class);
-		job.setCombinerClass(SumVisitorsReducer.class);
-		job.setReducerClass(SumVisitorsReducer.class);
+		job.setMapperClass(TotalSumVisitorsMapper.class);
+		job.setCombinerClass(TotalSumVisitorsReducer.class);
+		job.setReducerClass(TotalSumVisitorsReducer.class);
 
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(IntWritable.class);
