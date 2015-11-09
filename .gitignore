@@ -1,7 +1,7 @@
 # ===== This project =====
-aws-main-run
-data
-output
+aws-main-run*
+data*
+output*
 .vagrant
 installators
 
