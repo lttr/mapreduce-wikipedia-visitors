@@ -7,7 +7,7 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
 /**
- * Maps the page name and page count as composite key, leaving value as null.
+ * Maps the page name and page count as key and value.
  */
 public class TotalTopNMapper extends Mapper<Object, Text, Text, IntWritable> {
 
