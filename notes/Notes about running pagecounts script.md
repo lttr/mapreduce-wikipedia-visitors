@@ -8,6 +8,7 @@ Notes about running pagecounts script
 Download using _wget_
 ```
 wget --convert-links http://dumps.wikimedia.org/other/pagecounts-raw/2015/2015-07 -O index.html
+" on Windows
 cat index.html | sed -n "/href/ s#.*href=\"\(.*\)\".*#http://dumps.wikimedia.org/other/pagecounts-raw/2015/2015-07/\1#gp" | grep "gz$" > urls.txt
 # on Amazon Linux:
 cat index.html | sed -n "/href/ s/.*href=\"\(.*\)\".*/\1/gp" | grep "gz$" > urls.txt
