@@ -45,10 +45,10 @@ tar -xf /vagrant/installators/hadoop-2.7.1.tar.gz
 ``` 
 # Hadoop
 export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
-export HADOOP_HOME=/home/vagrant/hadoop/hadoop-2.7.1
+export HADOOP_HOME=/opt/hadoop/hadoop-2.7.1
 export PATH=$HADOOP_HOME/bin:$PATH
 export PATH=$JAVA_HOME/bin:$PATH
-export HADOOP_CLASSPATH=$/lib/tools.jar
+export HADOOP_CLASSPATH=$JAVA_HOME/lib/tools.jar
 ```
 
 #### Alter java home in hadoop-env.sh conf file 
@@ -96,7 +96,7 @@ sudo chown 777 data
 vi $HADOOP_HOME/etc/hadoop/core-site.xml
 # add:
   <property>
-    <name>fs.default.name</name>
+    <name>fs.defaultFS</name>
     <value>hdfs://localhost:9000</value>
   </property>
   <property>
@@ -114,6 +114,7 @@ vi $HADOOP_HOME/etc/hadoop/hdfs-site.xml
   </property>
 ```
 
+This configuration parameter is deprecated
 ``` 
 cp $HADOOP_HOME/etc/hadoop/mapred-site.xml.template $HADOOP_HOME/etc/hadoop/mapred-site.xml
 vi $HADOOP_HOME/etc/hadoop/mapred-site.xml

@@ -1,5 +1,5 @@
-Notes about running mr-wiki-script
-==================================
+Notes about running pagecounts script
+=====================================
 
 ### Input data
 
@@ -9,6 +9,8 @@ Download using _wget_
 ```
 wget --convert-links http://dumps.wikimedia.org/other/pagecounts-raw/2015/2015-07 -O index.html
 cat index.html | sed -n "/href/ s#.*href=\"\(.*\)\".*#http://dumps.wikimedia.org/other/pagecounts-raw/2015/2015-07/\1#gp" | grep "gz$" > urls.txt
+# on Amazon Linux:
+cat index.html | sed -n "/href/ s/.*href=\"\(.*\)\".*/\1/gp" | grep "gz$" > urls.txt
 wget -i urls.txt
 ```
 
@@ -45,15 +47,27 @@ The third phase creates file for every page from top 20 and fills it with page
 visits for every day. This is _filling_ phase.
 
 Running the script with _Micro data_ takes less then 1 second. Other data sets 
-are more interesting (times in seconds):
+are more interesting (times in seconds).
+
+On 3 GHz 2 cores processor, 2 GB of RAM (inside Linux virtual machine):
 
 | _phase_   | **Small** | **Medium**  | **Double-medium** | **Large**    | **Big** _estimation_ |
 |-----------|-----------|-------------|-------------------|--------------|----------------------|
 |           |           | 4 x _Small_ | 2 x _Medium_      | 3 x _Medium_ | 46 x _Medium_        |
-| _sum_     | 19 s      | 68 s        | 132 s             | 217 s        | 2944 s               |
+| _sum_     | 19 s      | 68 s        | 132 s             | 217 s        | 3100 s               |
 | _totals_  | 1 s       | 1 s         | 2 s               | 2 s          | 15 s                 |
 | _filling_ | 27 s      | 66 s        | 67 s              | 127 s        | 1300 s               |
-|           | **46 s**  | **134 s**   | **198 s**         | **344 s**    | **4259 s**           |
+|           | **46 s**  | **134 s**   | **198 s**         | **344 s**    | **4415 s**           |
+
+On 2 GHz 1 core processor, 4 GB of RAM (Amazon m1.medium instance):
+
+| _phase_   | **Small** | **Medium**  | **Double-medium** | **Large**    | **Big** _estimation_ | **Big** _reality_     |
+|-----------|-----------|-------------|-------------------|--------------|----------------------|-----------------------|
+|           |           | 4 x _Small_ | 2 x _Medium_      | 3 x _Medium_ | 46 x _Medium_        | 46 x _Medium_         |
+| _sum_     | 35 s      | 133 s       | 272 s             | 443 s        | 6700 s               | 12728 s (03:32:8)     | 
+| _totals_  | 2 s       | 3 s         | 3 s               | 5 s          | 20 s                 | 38 s                  |
+| _filling_ | 13 s      | 30 s        | 31 s              | 60 s         | 600 s                | 1009 s (16:49)        |
+|           | **50 s**  | **166 s**   | **306 s**         | **508 s**    | **7320 s**           | **13775 s** (3:49:35) |
 
 The _sum_ phase is growing linearly with the size of input data. The _filling_ 
 phase is growing slower because it depends on the size of data generated in 
